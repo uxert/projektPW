@@ -1,4 +1,4 @@
-package org.example.projekt_pw_zaklad_uslugowy;
+package projekt_PW;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

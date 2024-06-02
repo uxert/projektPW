@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                org.example.projekt_pw_zaklad_uslugowy/org.example.projekt_pw_zaklad_uslugowy.HelloApplication
+                                org.example.projekt_pw_zaklad_uslugowy/projekt_PW.HelloApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

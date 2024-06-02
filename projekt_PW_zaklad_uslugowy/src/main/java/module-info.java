@@ -3,6 +3,6 @@ module org.example.projekt_pw_zaklad_uslugowy {
     requires javafx.fxml;
 
 
-    opens org.example.projekt_pw_zaklad_uslugowy to javafx.fxml;
-    exports org.example.projekt_pw_zaklad_uslugowy;
+    opens projekt_PW to javafx.fxml;
+    exports projekt_PW;
 }
