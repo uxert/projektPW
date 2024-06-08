@@ -33,10 +33,10 @@ public class Test {
         }
         receptionist.start();
         //this loop populates the shelf with items - for code testing purposes
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 30; i++)
         {
-            FixedItem tempItem = new FixedItem("adres: " + i);
-            myShelf.addItemToShelf(tempItem);
+//            FixedItem tempItem = new FixedItem("adres: " + i);
+//            myShelf.addItemToShelf(tempItem);
             TimeUnit.MILLISECONDS.sleep((long) (300+ Math.random() * 150));
         }
 

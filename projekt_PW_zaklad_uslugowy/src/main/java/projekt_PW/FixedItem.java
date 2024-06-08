@@ -14,7 +14,7 @@ public class FixedItem {
 
     public void fixItem() throws InterruptedException {
         // this is the minimal amount of time that is required to fix the item
-        long timeNeeded = 300;
+        long timeNeeded = 700;
         // this provides some randomness - simulates complications during the repair
         timeNeeded += (long) (Math.random() * 300);
         Thread.sleep(timeNeeded);
