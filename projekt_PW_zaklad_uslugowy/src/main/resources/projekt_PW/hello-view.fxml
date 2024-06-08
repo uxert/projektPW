@@ -15,7 +15,7 @@
           </padding>
       
           <Label fx:id="welcomeText" />
-         <Button mnemonicParsing="false" onAction="#onAddItemClick" text="Give item to repair" />
+         <Button fx:id="addRepairButton" mnemonicParsing="false" onAction="#onAddItemClick" text="Give item to repair" />
          <Button fx:id="anotherButton" mnemonicParsing="false" onAction="#onSecondButtonClicked" text="Open the shop">
             <VBox.margin>
                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

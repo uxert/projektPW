@@ -15,6 +15,11 @@ import java.util.ArrayDeque;
 
 public class HelloApplication extends Application {
 
+    private static HelloApplication appInstance; // there should always be only one instance of the application
+    public static HelloApplication getAppInstance()
+    {
+        return appInstance;
+    }
     public void start(Stage mainStage) throws IOException {
 
 
@@ -23,6 +28,11 @@ public class HelloApplication extends Application {
         mainStage.setTitle("Hello!");
         mainStage.setScene(scene);
         mainStage.show();
+    }
+
+    public void init()
+    {
+        appInstance = this;
     }
 
     public static void main(String[] args) {

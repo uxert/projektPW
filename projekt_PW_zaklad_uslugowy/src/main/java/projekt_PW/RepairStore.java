@@ -6,17 +6,12 @@ import java.util.concurrent.TimeUnit;
 
 public class RepairStore extends Thread{
 
-    private  HelloController frontControl;
-
+    private HelloController frontControl;
+    private ItemShelfMonitor myShelf;
     ItemManagerWorker receptionist;
     public RepairStore(HelloController cont)
     {
         frontControl = cont;
-    }
-
-    public void closeStore(ArrayDeque<RepairWorker> workers)
-    {
-
     }
 
     public void run(){
@@ -24,7 +19,7 @@ public class RepairStore extends Thread{
         final int repairmenAmount = 3;
         final int maxItemCount = 100;
 
-        ItemShelfMonitor myShelf = new ItemShelfMonitor(maxItemCount, repairmenAmount, frontControl);
+        myShelf = new ItemShelfMonitor(maxItemCount, repairmenAmount, frontControl);
         RepairWorker[] repairmen = new RepairWorker[repairmenAmount];
 
         receptionist = new ItemManagerWorker(myShelf);
