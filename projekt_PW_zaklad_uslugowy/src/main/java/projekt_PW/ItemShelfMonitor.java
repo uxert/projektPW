@@ -1,4 +1,8 @@
 package projekt_PW;
+import javafx.application.Platform;
+import projekt_PW.runnable_animations.MoveToShelfAnimation;
+import projekt_PW.runnable_animations.SendItemAnimation;
+
 import java.util.ArrayDeque;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -10,14 +14,13 @@ this is a monitor class that provides synchronization over the access to the ite
 //This could be probably achieved using Collections.synchronizedDeque but that way it can provide more functionality
 public class ItemShelfMonitor {
     private final ArrayDeque<FixedItem> shelf;
+    private final HelloController control;
     final ReentrantLock myLock = new ReentrantLock(true);
     Condition noItems = myLock.newCondition();
 
     private final int maxItemCount;
     private int itemCount;
-
-    private int maxWorkerAmount;
-    public ItemShelfMonitor(int maxItemCount, int workerAmount)
+    public ItemShelfMonitor(int maxItemCount, int workerAmount, HelloController control)
     {
         this.itemCount = 0; // keeps track of how many items are in the store
         //this is not the same as number of items waiting on the shelf!
@@ -25,8 +28,16 @@ public class ItemShelfMonitor {
 
         this.shelf = new ArrayDeque<FixedItem>(maxItemCount);
         this.maxItemCount = maxItemCount;
-        this.maxWorkerAmount = workerAmount;
+        this.control = control;
     }
+
+    public void isSpaceAvailable(ItemManagerWorker imw)
+    {
+        myLock.lock();
+        if(itemCount == maxItemCount) imw.isThereSpace = false;
+        else imw.isThereSpace = true;
+    }
+
 
     /**
      * tries to add item to the shelf. If the shelf is already full item is not added and will be lost
@@ -43,6 +54,7 @@ public class ItemShelfMonitor {
                 System.out.println("Item with address: " + item.address + " is added to the shelf");
                 noItems.signal(); /*signals that there is an item to repair (in case
             any worker is already waiting for it) */
+                Platform.runLater(new MoveToShelfAnimation(control));
             }
         }
         finally {
@@ -85,6 +97,7 @@ public class ItemShelfMonitor {
                 tempItem.repairman = null;
                 repairman.currentlyRepairedItem = null;
                 repairman.isWaitingForRepair = true;
+                Platform.runLater(new SendItemAnimation(control));
             }
             else {
                 System.out.println("This item is not yet repaired, cannot send!");
