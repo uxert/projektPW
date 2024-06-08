@@ -1,5 +1,6 @@
 package projekt_PW;
 import java.util.ArrayDeque;
+import java.util.Collections;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -10,14 +11,13 @@ this is a monitor class that provides synchronization over the access to the ite
 //This could be probably achieved using Collections.synchronizedDeque but that way it can provide more functionality
 public class ItemShelfMonitor {
     private final ArrayDeque<FixedItem> shelf;
+    private final HelloController control;
     final ReentrantLock myLock = new ReentrantLock(true);
     Condition noItems = myLock.newCondition();
 
     private final int maxItemCount;
     private int itemCount;
-
-    private int maxWorkerAmount;
-    public ItemShelfMonitor(int maxItemCount, int workerAmount)
+    public ItemShelfMonitor(int maxItemCount, int workerAmount, HelloController control)
     {
         this.itemCount = 0; // keeps track of how many items are in the store
         //this is not the same as number of items waiting on the shelf!
@@ -25,8 +25,16 @@ public class ItemShelfMonitor {
 
         this.shelf = new ArrayDeque<FixedItem>(maxItemCount);
         this.maxItemCount = maxItemCount;
-        this.maxWorkerAmount = workerAmount;
+        this.control = control;
     }
+
+    public void isSpaceAvailable(ItemManagerWorker imw)
+    {
+        myLock.lock();
+        if(itemCount == maxItemCount) imw.isThereSpace = false;
+        else imw.isThereSpace = true;
+    }
+
 
     /**
      * tries to add item to the shelf. If the shelf is already full item is not added and will be lost
