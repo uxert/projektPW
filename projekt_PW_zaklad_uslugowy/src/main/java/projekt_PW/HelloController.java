@@ -5,6 +5,9 @@ import javafx.scene.control.Label;
 
 public class HelloController {
 
+    boolean isTheStoreRunning = false;
+    RepairStore myStore;
+
 
     @FXML
     private Label welcomeText;
@@ -17,6 +20,14 @@ public class HelloController {
     @FXML
     protected void onSecondButtonClicked()
     {
-        welcomeText.setText("Klikłeś drugi guzik");
+        if (isTheStoreRunning) return; //does not do anything if the store is already running
+        try {
+            myStore = new RepairStore(this);
+            myStore.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        welcomeText.setText("Odpalam sklep");
+        myStore.start();
     }
 }

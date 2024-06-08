@@ -1,20 +1,23 @@
 package projekt_PW;
 
-import java.lang.reflect.Array;
 import java.util.ArrayDeque;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class Test {
+public class RepairStore extends Thread{
+
+    private  HelloController frontControl;
+    public RepairStore(HelloController cont)
+    {
+        frontControl = cont;
+    }
 
     public void closeStore(ArrayDeque<RepairWorker> workers)
     {
 
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public void run(){
+        frontControl.isTheStoreRunning = true;
         final int repairmenAmount = 3;
         final int maxItemCount = 100;
 
@@ -33,11 +36,15 @@ public class Test {
         }
         receptionist.start();
         //this loop populates the shelf with items - for code testing purposes
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 5; i++)
         {
 //            FixedItem tempItem = new FixedItem("adres: " + i);
 //            myShelf.addItemToShelf(tempItem);
-            TimeUnit.MILLISECONDS.sleep((long) (300+ Math.random() * 150));
+            try {
+                TimeUnit.MILLISECONDS.sleep((long) (300+ Math.random() * 150));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         receptionist.interrupt();
@@ -54,12 +61,21 @@ public class Test {
                 repairmen[i].interrupt();
             }
         }
-        receptionist.join();
+        try {
+            receptionist.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         for (int i = 0; i < 3; i++)
         {
-            repairmen[i].join();
+            try {
+                repairmen[i].join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
 
-        System.out.println("The store was closed successfully");
+        System.out.println("------------The store was closed successfully");
+        frontControl.isTheStoreRunning = false;
     }
 }
