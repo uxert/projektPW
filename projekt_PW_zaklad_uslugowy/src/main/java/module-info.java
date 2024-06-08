@@ -5,4 +5,6 @@ module org.example.projekt_pw_zaklad_uslugowy {
 
     opens projekt_PW to javafx.fxml;
     exports projekt_PW;
+    exports projekt_PW.runnable_animations;
+    opens projekt_PW.runnable_animations to javafx.fxml;
 }

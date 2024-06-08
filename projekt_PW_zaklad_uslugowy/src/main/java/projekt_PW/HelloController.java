@@ -15,21 +15,21 @@ import java.util.concurrent.TimeUnit;
 
 public class HelloController {
 
+    public int workerX= 100, workerY = 300;
     boolean isTheStoreRunning = false;
     private RepairStore myStore;
-    private ArrayDeque<Circle> itemsOnShelf;
-    public void addToShelfAnimation()
-    {
-        Circle temp = new Circle(25);
-        itemsOnShelf.add(temp);
-        shelfGUI.getChildren().add(temp);
-    }
+    public ArrayDeque<Circle> itemsOnShelf;
+
 
     @FXML
     private Button addRepairButton;
 
     @FXML
     private HBox shelfGUI;
+    public HBox getShelfGUI()
+    {
+        return shelfGUI;
+    }
 
     @FXML
     private Label welcomeText;
@@ -58,7 +58,6 @@ public class HelloController {
         FixedItem temp = new FixedItem("No address (yet)");
         myStore.receptionist.clientQueue.add(temp); // adds to the queue of clients waiting to be served
         welcomeText.setText("You clicked to add a new item");
-        addToShelfAnimation();
     }
 
     public void initialize()

@@ -1,6 +1,9 @@
 package projekt_PW;
+import javafx.application.Platform;
+import projekt_PW.runnable_animations.MoveToShelfAnimation;
+import projekt_PW.runnable_animations.SendItemAnimation;
+
 import java.util.ArrayDeque;
-import java.util.Collections;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -51,6 +54,7 @@ public class ItemShelfMonitor {
                 System.out.println("Item with address: " + item.address + " is added to the shelf");
                 noItems.signal(); /*signals that there is an item to repair (in case
             any worker is already waiting for it) */
+                Platform.runLater(new MoveToShelfAnimation(control));
             }
         }
         finally {
@@ -93,6 +97,7 @@ public class ItemShelfMonitor {
                 tempItem.repairman = null;
                 repairman.currentlyRepairedItem = null;
                 repairman.isWaitingForRepair = true;
+                Platform.runLater(new SendItemAnimation(control));
             }
             else {
                 System.out.println("This item is not yet repaired, cannot send!");
