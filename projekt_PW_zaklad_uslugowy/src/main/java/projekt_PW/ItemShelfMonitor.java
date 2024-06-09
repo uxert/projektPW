@@ -25,19 +25,19 @@ public class ItemShelfMonitor {
         this.itemCount = 0; // keeps track of how many items are in the store
         //this is not the same as number of items waiting on the shelf!
         //there can be maxItemCount items in the whole store, not just laying idle on the shelf
+        //items being repaired also count to this limit
 
         this.shelf = new ArrayDeque<FixedItem>(maxItemCount);
         this.maxItemCount = maxItemCount;
         this.control = control;
     }
 
-    public void isSpaceAvailable(ItemManagerWorker imw)
+    //there is no need to synchronize this method as there is, and ever will be, only one thread that
+    //can add items to the shelf and the method itself does not modify anything
+    public boolean checkForSpace()
     {
-        myLock.lock();
-        if(itemCount == maxItemCount) imw.isThereSpace = false;
-        else imw.isThereSpace = true;
+        return itemCount < maxItemCount;
     }
-
 
     /**
      * tries to add item to the shelf. If the shelf is already full item is not added and will be lost
@@ -52,8 +52,7 @@ public class ItemShelfMonitor {
                 shelf.add(item);
                 this.itemCount++;
                 System.out.println("Item with address: " + item.address + " is added to the shelf");
-                noItems.signal(); /*signals that there is an item to repair (in case
-            any worker is already waiting for it) */
+                control.repairmen.submit(new TaskRepair(this, control,item));
                 Platform.runLater(new MoveToShelfAnimation(control));
             }
         }
@@ -67,14 +66,11 @@ public class ItemShelfMonitor {
      *  If there is nothing to repair it makes the repairman await on condition
      * @param repairman reference to a FREE worker looking for an item to repair
      */
-    public void assignItem(RepairWorker repairman) throws InterruptedException {
+    public void assignItem(TaskRepair repairman) throws InterruptedException {
         myLock.lock();
         try {
-            if (this.shelf.isEmpty())
-                noItems.await();
             FixedItem tempItem = shelf.removeFirst();
-            repairman.currentlyRepairedItem = tempItem;
-            repairman.isWaitingForRepair = false;
+            repairman.item = tempItem;
             tempItem.setRepair(repairman);
         } finally {
             myLock.unlock();
@@ -85,18 +81,17 @@ public class ItemShelfMonitor {
      * this function removes item currently held by given RepairWorker and removes it from evidence
      * @param repairman reference to repairman holding an ALREADY REPAIRED item
      */
-    public void sendRepairedItem(RepairWorker repairman)
+    public void sendRepairedItem(TaskRepair repairman)
     {
         myLock.lock();
         try {
-            FixedItem tempItem = repairman.currentlyRepairedItem;
+            FixedItem tempItem = repairman.item;
             if (tempItem.alreadyRepaired)
             {
                 itemCount--;
                 System.out.println("Item successfully repaired, sending by worker " + Thread.currentThread().getName());
                 tempItem.repairman = null;
-                repairman.currentlyRepairedItem = null;
-                repairman.isWaitingForRepair = true;
+                repairman.item = null;
                 Platform.runLater(new SendItemAnimation(control));
             }
             else {
