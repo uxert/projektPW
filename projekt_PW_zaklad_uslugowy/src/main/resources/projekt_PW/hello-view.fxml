@@ -8,7 +8,10 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane prefHeight="460.0" prefWidth="685.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projekt_PW.HelloController">
-   <top>
+   <bottom>
+      <HBox fx:id="shelfGUI" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <center>
       <VBox alignment="CENTER" prefHeight="250.0" prefWidth="367.0" spacing="20.0" BorderPane.alignment="CENTER">
           <padding>
               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -16,11 +19,13 @@
       
           <Label fx:id="welcomeText" />
          <Button fx:id="addRepairButton" mnemonicParsing="false" onAction="#onAddItemClick" text="Give item to repair" />
-         <Button fx:id="anotherButton" mnemonicParsing="false" onAction="#onSecondButtonClicked" text="Open the shop">
+         <Button fx:id="anotherButton" mnemonicParsing="false" onAction="#openTheStore" text="Open the shop">
             <VBox.margin>
                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </VBox.margin>
          </Button>
+         <Button mnemonicParsing="false" onAction="#closeStore" prefHeight="24.0" prefWidth="95.0" text="Close the shop" />
+         <Button mnemonicParsing="false" onAction="#endForAll" text="End work permamently" />
           <Button fx:id="helloButton" onAction="#onHelloButtonClick" text="Hello!">
             <VBox.margin>
                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -30,8 +35,5 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </BorderPane.margin>
       </VBox>
-   </top>
-   <bottom>
-      <HBox fx:id="shelfGUI" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </bottom>
+   </center>
 </BorderPane>

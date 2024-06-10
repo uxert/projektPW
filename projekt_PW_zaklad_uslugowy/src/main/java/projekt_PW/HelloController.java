@@ -1,23 +1,28 @@
 package projekt_PW;
 
-import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Scale;
-import javafx.util.Duration;
 
 import java.util.ArrayDeque;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class HelloController {
 
-    public int workerX= 100, workerY = 300;
-    boolean isTheStoreRunning = false;
-    private RepairStore myStore;
+// There are
+    ExecutorService receptionist = Executors.newSingleThreadExecutor();
+    ExecutorService repairmen = Executors.newFixedThreadPool(3);
+    private ItemShelfMonitor myShelf;
+
+
+    final int repairmenAmount = 3;
+    final int maxItemCount = 100;
+
+    boolean isTheStoreRunning = false, isTheStoreClosed = false;
     public ArrayDeque<Circle> itemsOnShelf;
 
 
@@ -40,32 +45,52 @@ public class HelloController {
     }
 
     @FXML
-    protected void onSecondButtonClicked()
+    protected void openTheStore()
     {
-        if (isTheStoreRunning) return; //does not do anything if the store is already running
-        myStore = new RepairStore(this);
-        welcomeText.setText("Opening the shop");
-        myStore.start();
+        System.out.println("=============Opening the store==============");
+        isTheStoreRunning = true;
     }
 
     @FXML
     protected void onAddItemClick() throws InterruptedException {
         if(!isTheStoreRunning)
         {
-            welcomeText.setText("The shop is still closed!");
+            welcomeText.setText("The shop is not open!");
             return; // does nothing if there is NO shop currently running
         }
         FixedItem temp = new FixedItem("No address (yet)");
-        myStore.receptionist.clientQueue.add(temp); // adds to the queue of clients waiting to be served
         welcomeText.setText("You clicked to add a new item");
+        receptionist.submit(new TaskAddOnShelf(myShelf, temp));
+    }
+
+    @FXML
+    protected void closeStore()
+    {
+        System.out.println("-------Store is now closing, no new items will be accepted------------");
+        isTheStoreRunning = false;
+        welcomeText.setText("The store will not accept any new items to repair");
+    }
+
+    @FXML
+    protected void endForAll()
+    {
+        if (isTheStoreClosed)
+        {
+            return;
+        }
+        System.out.println("<<<<<<<<<<<<Store is now ending its work for good>>>>>>>>>>>>>");
+        isTheStoreRunning = false;
+        repairmen.shutdown();
+        receptionist.shutdown();
+        welcomeText.setText("The store has closed for good, you may close the app now");
+        isTheStoreClosed = true;
     }
 
     public void initialize()
     {
+        myShelf = new ItemShelfMonitor(maxItemCount, repairmenAmount, this);
         itemsOnShelf = new ArrayDeque<>();
         shelfGUI.setSpacing(10);
-
-        System.out.println("Faktycznie sie inicjalizuje ");
     }
 
 }
