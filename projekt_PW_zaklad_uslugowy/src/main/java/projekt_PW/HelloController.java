@@ -1,13 +1,14 @@
 package projekt_PW;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 import java.util.ArrayDeque;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -39,14 +40,31 @@ public class HelloController {
     @FXML
     private Label welcomeText;
 
-    @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    public AnchorPane getShopPane() {
+        return shopPane;
     }
+
+    @FXML
+    private AnchorPane shopPane;
+
+    @FXML
+    public VBox receptionistGUI;
+    @FXML
+    private Pane repairmanGUI1;
+    @FXML
+    private Pane repairmanGUI2;
+    @FXML
+    private Pane repairmanGUI3;
+    Pane[] repairmenGUI;
 
     @FXML
     protected void openTheStore()
     {
+        if (isTheStoreClosed)
+        {
+            welcomeText.setText("You cannot reopen the store");
+            return;
+        }
         System.out.println("=============Opening the store==============");
         isTheStoreRunning = true;
     }
@@ -60,13 +78,13 @@ public class HelloController {
         }
         FixedItem temp = new FixedItem("No address (yet)");
         welcomeText.setText("You clicked to add a new item");
-        receptionist.submit(new TaskAddOnShelf(myShelf, temp));
+        receptionist.submit(new TaskAddOnShelf(myShelf, temp, this));
     }
 
     @FXML
     protected void closeStore()
     {
-        System.out.println("-------Store is now closing, no new items will be accepted------------");
+        System.out.println("-------Store is now closing the doors, no new items will be accepted------------");
         isTheStoreRunning = false;
         welcomeText.setText("The store will not accept any new items to repair");
     }
@@ -88,6 +106,24 @@ public class HelloController {
 
     public void initialize()
     {
+        //sets background colors
+        shopPane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, null, null)));
+        Background workersBackGUI = new Background(new BackgroundFill(Color.LAVENDER, null, null));
+        repairmenGUI = new Pane[]{repairmanGUI1, repairmanGUI2, repairmanGUI3};
+        for (Pane pane : repairmenGUI) {
+            pane.setBackground(workersBackGUI);
+        }
+        BorderStroke borderStroke = new BorderStroke(
+                Color.BLACK, // Border color
+                BorderStrokeStyle.SOLID, // Border style
+                new CornerRadii(5), // Corner radii
+                new BorderWidths(2) // Border widths
+        );
+        Border border = new Border(borderStroke);
+        receptionistGUI.setBorder(border);
+        receptionistGUI.setAlignment(Pos.CENTER);
+
+        //creates the shelf
         myShelf = new ItemShelfMonitor(maxItemCount, repairmenAmount, this);
         itemsOnShelf = new ArrayDeque<>();
         shelfGUI.setSpacing(10);

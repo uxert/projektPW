@@ -1,8 +1,3 @@
-W tej gałęzi jest robione spore przemeblowanie - zamiast zwykłych Thread-sów i start() planowane jest 
-zastosowanie Tasków oraz Executorów do zlecania zadań dziejących się w ramach "backendu" - dla lepszej
-komunikacji backendu z interfejsem (ponieważ Taski można obserwować z poziomu kontrolera GUI)
-
-
 # Projekt z przedmiotu programowanie współbieżne
 
 Ma pokazać za pomocą graficznej aplikacji współbieżny przebieg procesów w zakładzie naprawczo-usługowym.

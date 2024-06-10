@@ -3,21 +3,20 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="460.0" prefWidth="685.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projekt_PW.HelloController">
-   <bottom>
-      <HBox fx:id="shelfGUI" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </bottom>
-   <center>
-      <VBox alignment="CENTER" prefHeight="250.0" prefWidth="367.0" spacing="20.0" BorderPane.alignment="CENTER">
+
+<AnchorPane fx:id="shopPane" maxHeight="600.0" maxWidth="900.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="664.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projekt_PW.HelloController">
+   <children>
+      <VBox alignment="CENTER" layoutX="399.0" layoutY="14.0" prefHeight="298.0" prefWidth="251.0" spacing="20.0">
           <padding>
               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
           </padding>
       
-          <Label fx:id="welcomeText" />
+                                     <Label fx:id="welcomeText" />
          <Button fx:id="addRepairButton" mnemonicParsing="false" onAction="#onAddItemClick" text="Give item to repair" />
          <Button fx:id="anotherButton" mnemonicParsing="false" onAction="#openTheStore" text="Open the shop">
             <VBox.margin>
@@ -26,14 +25,14 @@
          </Button>
          <Button mnemonicParsing="false" onAction="#closeStore" prefHeight="24.0" prefWidth="95.0" text="Close the shop" />
          <Button mnemonicParsing="false" onAction="#endForAll" text="End work permamently" />
-          <Button fx:id="helloButton" onAction="#onHelloButtonClick" text="Hello!">
-            <VBox.margin>
-               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </VBox.margin>
-         </Button>
-         <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </BorderPane.margin>
       </VBox>
-   </center>
-</BorderPane>
+      <HBox fx:id="shelfGUI" layoutX="167.0" layoutY="438.0" maxWidth="1.7976931348623157E308" prefHeight="96.0" prefWidth="304.0" />
+      <Pane fx:id="repairmanGUI1" layoutX="14.0" layoutY="67.0" prefHeight="96.0" prefWidth="121.0" />
+      <Pane fx:id="repairmanGUI2" layoutX="14.0" layoutY="175.0" prefHeight="96.0" prefWidth="121.0" />
+      <Pane fx:id="repairmanGUI3" layoutX="14.0" layoutY="281.0" prefHeight="96.0" prefWidth="121.0" />
+      <VBox fx:id="receptionistGUI" layoutX="282.0" layoutY="93.0" prefHeight="81.0" prefWidth="100.0" />
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</AnchorPane>
