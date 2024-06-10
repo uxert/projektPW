@@ -1,11 +1,7 @@
-package projekt_PW.runnable_animations;
+package projekt_PW.runnable_GUI_actions;
 
-import javafx.animation.TranslateTransition;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
-import javafx.util.Duration;
-import projekt_PW.HelloApplication;
 import projekt_PW.HelloController;
 
 /**

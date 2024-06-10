@@ -1,7 +1,7 @@
 package projekt_PW;
 import javafx.application.Platform;
-import projekt_PW.runnable_animations.MoveToShelfAnimation;
-import projekt_PW.runnable_animations.SendItemAnimation;
+import projekt_PW.runnable_GUI_actions.MoveToShelfAnimation;
+import projekt_PW.runnable_GUI_actions.SendItemAnimation;
 
 import java.util.ArrayDeque;
 import java.util.concurrent.locks.Condition;
@@ -92,7 +92,7 @@ public class ItemShelfMonitor {
                 System.out.println("Item successfully repaired, sending by worker " + Thread.currentThread().getName());
                 tempItem.repairman = null;
                 repairman.item = null;
-                Platform.runLater(new SendItemAnimation(control));
+                Platform.runLater(new SendItemAnimation(control, 500));
             }
             else {
                 System.out.println("This item is not yet repaired, cannot send!");

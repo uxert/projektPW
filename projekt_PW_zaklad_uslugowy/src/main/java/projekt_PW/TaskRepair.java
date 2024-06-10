@@ -1,12 +1,13 @@
 package projekt_PW;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 
 import java.util.concurrent.TimeUnit;
 
 public class TaskRepair extends Task<Void> {
-    private ItemShelfMonitor shelf;
-    private HelloController control;
+    final private ItemShelfMonitor shelf;
+    final private HelloController control;
     FixedItem item;
     public TaskRepair(ItemShelfMonitor shelf, HelloController control, FixedItem item) {
         this.shelf = shelf;
@@ -19,6 +20,14 @@ public class TaskRepair extends Task<Void> {
         shelf.assignItem(this);
         item.fixItem();
         shelf.sendRepairedItem(this);
+        TimeUnit.MILLISECONDS.sleep(500);
+
+        Runnable removeItemRunnable = () -> {
+            control.itemsOnShelf.removeFirst();
+            control.getShelfGUI().getChildren().removeFirst();
+        };
+        Platform.runLater(removeItemRunnable);
+
         return null;
     }
 }

@@ -1,16 +1,17 @@
-package projekt_PW.runnable_animations;
+package projekt_PW.runnable_GUI_actions;
 
 import javafx.animation.ScaleTransition;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import projekt_PW.HelloController;
 
 public class SendItemAnimation implements Runnable{
     private HelloController control;
-    public SendItemAnimation(HelloController control)
+    int timeMilis;
+    public SendItemAnimation(HelloController control, int timeMilis)
     {
         this.control = control;
+        this.timeMilis = timeMilis;
     }
     public void run()
     {
@@ -19,11 +20,8 @@ public class SendItemAnimation implements Runnable{
         scale.setNode(temp);
         scale.setByX(-0.75);
         scale.setByY(-0.75);
-        scale.setDuration(Duration.millis(500));
+        scale.setDuration(Duration.millis(timeMilis));
         scale.play();
-        control.itemsOnShelf.removeFirst();
-        control.getShelfGUI().getChildren().removeFirst();
-
     }
 }
 
