@@ -1,3 +1,8 @@
+TODO:
+1) Dodać animacje przemieszczania się
+2) Dodać stos itemów czekających na recepcjonistę
+3) Ogarnąć to, że UI jest diabolicznie brzydkie
+
 # Projekt z przedmiotu programowanie współbieżne
 
 Ma pokazać za pomocą graficznej aplikacji współbieżny przebieg procesów w zakładzie naprawczo-usługowym.
