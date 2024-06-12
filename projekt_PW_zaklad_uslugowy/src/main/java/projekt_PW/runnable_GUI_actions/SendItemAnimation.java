@@ -8,18 +8,20 @@ import projekt_PW.HelloController;
 public class SendItemAnimation implements Runnable{
     private HelloController control;
     int timeMilis;
-    public SendItemAnimation(HelloController control, int timeMilis)
+    Circle itemGUI;
+    public SendItemAnimation(HelloController control, int timeMilis, Circle itemGUI)
     {
         this.control = control;
         this.timeMilis = timeMilis;
+        this.itemGUI = itemGUI;
     }
     public void run()
     {
-        Circle temp = control.itemsOnShelf.getFirst();
+
         ScaleTransition scale = new ScaleTransition();
-        scale.setNode(temp);
-        scale.setByX(-0.75);
-        scale.setByY(-0.75);
+        scale.setNode(itemGUI);
+        scale.setByX(-0.85);
+        scale.setByY(-0.85);
         scale.setDuration(Duration.millis(timeMilis));
         scale.play();
     }

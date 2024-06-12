@@ -2,15 +2,12 @@ package projekt_PW;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-import java.util.ArrayDeque;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 public class HelloController {
 
@@ -24,11 +21,8 @@ public class HelloController {
     final int maxItemCount = 100;
 
     boolean isTheStoreRunning = false, isTheStoreClosed = false;
-    public ArrayDeque<Circle> itemsOnShelf;
-
-
-    @FXML
-    private Button addRepairButton;
+    public LinkedBlockingDeque<Circle> itemsOnShelf;
+    public LinkedBlockingDeque<Integer> availableRepairmen = new LinkedBlockingDeque<Integer>(3);
 
     @FXML
     private HBox shelfGUI;
@@ -50,12 +44,12 @@ public class HelloController {
     @FXML
     public VBox receptionistGUI;
     @FXML
-    private Pane repairmanGUI1;
+    private StackPane repairmanGUI1;
     @FXML
-    private Pane repairmanGUI2;
+    private StackPane repairmanGUI2;
     @FXML
-    private Pane repairmanGUI3;
-    Pane[] repairmenGUI;
+    private StackPane repairmanGUI3;
+    StackPane[] repairmenGUI;
 
     @FXML
     protected void openTheStore()
@@ -106,13 +100,15 @@ public class HelloController {
 
     public void initialize()
     {
+        availableRepairmen.add(0);
+        availableRepairmen.add(1);
+        availableRepairmen.add(2);
+
         //sets background colors
         shopPane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, null, null)));
         Background workersBackGUI = new Background(new BackgroundFill(Color.LAVENDER, null, null));
-        repairmenGUI = new Pane[]{repairmanGUI1, repairmanGUI2, repairmanGUI3};
-        for (Pane pane : repairmenGUI) {
-            pane.setBackground(workersBackGUI);
-        }
+        repairmenGUI = new StackPane[]{repairmanGUI1, repairmanGUI2, repairmanGUI3};
+
         BorderStroke borderStroke = new BorderStroke(
                 Color.BLACK, // Border color
                 BorderStrokeStyle.SOLID, // Border style
@@ -123,9 +119,15 @@ public class HelloController {
         receptionistGUI.setBorder(border);
         receptionistGUI.setAlignment(Pos.CENTER);
 
+        for (StackPane pane : repairmenGUI) {
+            pane.setBackground(workersBackGUI);
+            pane.setBorder(border);
+            pane.setAlignment(Pos.CENTER);
+        }
+
         //creates the shelf
         myShelf = new ItemShelfMonitor(maxItemCount, repairmenAmount, this);
-        itemsOnShelf = new ArrayDeque<>();
+        itemsOnShelf = new LinkedBlockingDeque<>();
         shelfGUI.setSpacing(10);
     }
 

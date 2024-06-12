@@ -9,9 +9,9 @@ import java.util.concurrent.TimeUnit;
 
 public class TaskAddOnShelf extends Task<Boolean> {
 
-    private ItemShelfMonitor shelf;
-    private FixedItem item;
-    private HelloController control;
+    private final ItemShelfMonitor shelf;
+    private final FixedItem item;
+    private final HelloController control;
     public TaskAddOnShelf(ItemShelfMonitor shelf, FixedItem item, HelloController control)
     {
         this.shelf = shelf;
@@ -22,7 +22,6 @@ public class TaskAddOnShelf extends Task<Boolean> {
     /**
      *
      * @return Returns true if an item has been successfully added to the shelf and false if it has not
-     * @throws InterruptedException
      */
     public Boolean call() throws InterruptedException {
         Circle itemGUI = new Circle(150, 200, 25, Color.color(Math.random(), Math.random(), Math.random()));
