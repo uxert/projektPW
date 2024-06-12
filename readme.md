@@ -2,6 +2,7 @@ TODO:
 1) Dodać animacje przemieszczania się
 2) Dodać stos itemów czekających na recepcjonistę
 3) Ogarnąć to, że UI jest diabolicznie brzydkie
+4) Zrobić refactor kodu - rozwikłać część spaghetti
 
 # Projekt z przedmiotu programowanie współbieżne
 
