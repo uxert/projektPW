@@ -7,10 +7,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="shopPane" maxHeight="600.0" maxWidth="900.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0" prefWidth="664.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projekt_PW.HelloController">
+<AnchorPane fx:id="shopPane" maxHeight="692.0" maxWidth="900.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="836.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projekt_PW.HelloController">
    <children>
-      <VBox alignment="CENTER" layoutX="399.0" layoutY="14.0" prefHeight="298.0" prefWidth="251.0" spacing="20.0">
+      <VBox alignment="CENTER" layoutX="293.0" layoutY="33.0" prefHeight="298.0" prefWidth="251.0" spacing="20.0">
           <padding>
               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
           </padding>
@@ -26,10 +28,16 @@
          <Button mnemonicParsing="false" onAction="#endForAll" text="End work permamently" />
       </VBox>
       <HBox fx:id="shelfGUI" layoutX="167.0" layoutY="438.0" maxWidth="1.7976931348623157E308" prefHeight="96.0" prefWidth="304.0" />
-      <VBox fx:id="receptionistGUI" layoutX="282.0" layoutY="93.0" prefHeight="81.0" prefWidth="100.0" />
+      <VBox fx:id="receptionistGUI" layoutX="368.0" layoutY="320.0" prefHeight="81.0" prefWidth="100.0" />
       <StackPane fx:id="repairmanGUI1" layoutX="47.0" layoutY="38.0" prefHeight="96.0" prefWidth="139.0" />
       <StackPane fx:id="repairmanGUI3" layoutX="47.0" layoutY="312.0" prefHeight="96.0" prefWidth="139.0" />
       <StackPane fx:id="repairmanGUI2" layoutX="47.0" layoutY="174.0" prefHeight="96.0" prefWidth="139.0" />
+      <Text layoutX="656.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Waiting items" wrappingWidth="100.0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <StackPane fx:id="waitingItemsContainterGUI" layoutX="642.0" layoutY="142.0" prefHeight="81.0" prefWidth="128.0" />
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

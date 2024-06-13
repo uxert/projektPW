@@ -25,13 +25,11 @@ public class TaskAddOnShelf extends Task<Boolean> {
      */
     public Boolean call() throws InterruptedException {
         Circle itemGUI = new Circle(150, 200, 25, Color.color(Math.random(), Math.random(), Math.random()));
-        System.out.println(itemGUI);
-        System.out.println("<<<<");
         Runnable giveReceptionistItemRunnable = () ->{
+            control.decrementWaitingCount();
             control.receptionistGUI.getChildren().add(itemGUI);
         };
         Platform.runLater(giveReceptionistItemRunnable);
-        System.out.println(">>>>");
         item.address = "Timestamp: " + System.currentTimeMillis();
         TimeUnit.MILLISECONDS.sleep(300);
         if (shelf.checkForSpace())
