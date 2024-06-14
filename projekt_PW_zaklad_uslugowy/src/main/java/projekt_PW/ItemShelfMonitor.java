@@ -1,5 +1,6 @@
 package projekt_PW;
 import javafx.application.Platform;
+import javafx.scene.shape.Circle;
 import projekt_PW.runnable_GUI_actions.MoveToShelfAnimation;
 import projekt_PW.runnable_GUI_actions.SendItemAnimation;
 
@@ -52,8 +53,8 @@ public class ItemShelfMonitor {
                 shelf.add(item);
                 this.itemCount++;
                 System.out.println("Item with address: " + item.address + " is added to the shelf");
-                control.repairmen.submit(new TaskRepair(this, control,item));
                 Platform.runLater(new MoveToShelfAnimation(control));
+                control.repairmen.submit(new TaskRepair(this, control,item));
             }
         }
         finally {
@@ -81,18 +82,19 @@ public class ItemShelfMonitor {
      * this function removes item currently held by given RepairWorker and removes it from evidence
      * @param repairman reference to repairman holding an ALREADY REPAIRED item
      */
-    public void sendRepairedItem(TaskRepair repairman)
+    public void sendRepairedItem(TaskRepair repairman, int timeMilis)
     {
         myLock.lock();
         try {
             FixedItem tempItem = repairman.item;
+            Circle tempItemGUI = repairman.itemGUI;
             if (tempItem.alreadyRepaired)
             {
                 itemCount--;
                 System.out.println("Item successfully repaired, sending by worker " + Thread.currentThread().getName());
                 tempItem.repairman = null;
                 repairman.item = null;
-                Platform.runLater(new SendItemAnimation(control, 500));
+                Platform.runLater(new SendItemAnimation(control, timeMilis, tempItemGUI));
             }
             else {
                 System.out.println("This item is not yet repaired, cannot send!");

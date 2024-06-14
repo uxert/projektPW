@@ -1,7 +1,8 @@
-W tej gałęzi jest robione spore przemeblowanie - zamiast zwykłych Thread-sów i start() planowane jest 
-zastosowanie Tasków oraz Executorów do zlecania zadań dziejących się w ramach "backendu" - dla lepszej
-komunikacji backendu z interfejsem (ponieważ Taski można obserwować z poziomu kontrolera GUI)
-
+TODO:
+1) Dodać animacje przemieszczania się
+2) Dodać stos itemów czekających na recepcjonistę
+3) Ogarnąć to, że UI jest diabolicznie brzydkie
+4) Zrobić refactor kodu - rozwikłać część spaghetti
 
 # Projekt z przedmiotu programowanie współbieżne
 
