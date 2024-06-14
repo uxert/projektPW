@@ -9,20 +9,16 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 import java.util.concurrent.*;
 
 public class HelloController {
-
-// There are
-    ExecutorService receptionist = Executors.newSingleThreadExecutor();
-    ExecutorService repairmen = Executors.newFixedThreadPool(3);
-    private ItemShelfMonitor myShelf;
-
-
     final int repairmenAmount = 3;
     final int maxItemCount = 100;
+    PausableThreadPoolExecutor receptionist = new PausableThreadPoolExecutor(1, 150);
+    PausableThreadPoolExecutor repairmen = new PausableThreadPoolExecutor(repairmenAmount, maxItemCount);
+    private ItemShelfMonitor myShelf;
+
 
     boolean isTheStoreRunning = false, isTheStoreClosed = false;
     public LinkedBlockingDeque<Circle> itemsOnShelf;
@@ -65,11 +61,13 @@ public class HelloController {
     {
         if (isTheStoreClosed)
         {
-            welcomeText.setText("You cannot reopen the store");
+            welcomeText.setText("You cannot reopen the store once you closed it");
             return;
         }
         System.out.println("=============Opening the store==============");
         isTheStoreRunning = true;
+        repairmen.resume();
+        receptionist.resume();
     }
 
     @FXML
@@ -91,11 +89,13 @@ public class HelloController {
     }
 
     @FXML
-    protected void closeStore()
+    protected void pauseTheStore()
     {
-        System.out.println("-------Store is now closing the doors, no new items will be accepted------------");
+        System.out.println("-------Store is now closing the doors and halting, no new items will be accepted---------");
         isTheStoreRunning = false;
-        welcomeText.setText("The store will not accept any new items to repair");
+        receptionist.pause();
+        repairmen.pause();
+        welcomeText.setText("The simulation is paused");
     }
 
     @FXML

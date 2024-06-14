@@ -24,7 +24,7 @@
                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </VBox.margin>
          </Button>
-         <Button mnemonicParsing="false" onAction="#closeStore" prefHeight="24.0" prefWidth="95.0" text="Close the shop" />
+         <Button mnemonicParsing="false" onAction="#pauseTheStore" prefHeight="24.0" prefWidth="95.0" text="Pause" />
          <Button mnemonicParsing="false" onAction="#endForAll" text="End work permamently" />
       </VBox>
       <HBox fx:id="shelfGUI" layoutX="167.0" layoutY="438.0" maxWidth="1.7976931348623157E308" prefHeight="96.0" prefWidth="304.0" />
