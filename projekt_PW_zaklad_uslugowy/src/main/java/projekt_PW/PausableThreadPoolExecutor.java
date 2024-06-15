@@ -1,7 +1,6 @@
 package projekt_PW;
 
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
@@ -9,11 +8,11 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class PausableThreadPoolExecutor extends ThreadPoolExecutor {
     private boolean isPaused;
-    private ReentrantLock pauseLock = new ReentrantLock();
-    private Condition unpaused = pauseLock.newCondition();
+    private final ReentrantLock pauseLock = new ReentrantLock();
+    private final Condition unpaused = pauseLock.newCondition();
 
     public PausableThreadPoolExecutor(int poolSize, int maxQueueCapacity) {
-        super(poolSize, poolSize, Long.MAX_VALUE, TimeUnit.NANOSECONDS, new ArrayBlockingQueue<Runnable>(maxQueueCapacity));
+        super(poolSize, poolSize, Long.MAX_VALUE, TimeUnit.NANOSECONDS, new ArrayBlockingQueue<>(maxQueueCapacity));
     }
 
     protected void beforeExecute(Thread t, Runnable r) {

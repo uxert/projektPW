@@ -6,12 +6,10 @@ import javafx.util.Duration;
 import projekt_PW.HelloController;
 
 public class SendItemAnimation implements Runnable{
-    private HelloController control;
     int timeMilis;
     Circle itemGUI;
-    public SendItemAnimation(HelloController control, int timeMilis, Circle itemGUI)
+    public SendItemAnimation(int timeMilis, Circle itemGUI)
     {
-        this.control = control;
         this.timeMilis = timeMilis;
         this.itemGUI = itemGUI;
     }

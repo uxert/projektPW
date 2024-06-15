@@ -5,7 +5,6 @@ import projekt_PW.runnable_GUI_actions.MoveToShelfAnimation;
 import projekt_PW.runnable_GUI_actions.SendItemAnimation;
 
 import java.util.ArrayDeque;
-import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -17,18 +16,17 @@ public class ItemShelfMonitor {
     private final ArrayDeque<FixedItem> shelf;
     private final HelloController control;
     final ReentrantLock myLock = new ReentrantLock(true);
-    Condition noItems = myLock.newCondition();
 
     private final int maxItemCount;
     private int itemCount;
-    public ItemShelfMonitor(int maxItemCount, int workerAmount, HelloController control)
+    public ItemShelfMonitor(int maxItemCount, HelloController control)
     {
         this.itemCount = 0; // keeps track of how many items are in the store
         //this is not the same as number of items waiting on the shelf!
         //there can be maxItemCount items in the whole store, not just laying idle on the shelf
         //items being repaired also count to this limit
 
-        this.shelf = new ArrayDeque<FixedItem>(maxItemCount);
+        this.shelf = new ArrayDeque<>(maxItemCount);
         this.maxItemCount = maxItemCount;
         this.control = control;
     }
@@ -67,7 +65,7 @@ public class ItemShelfMonitor {
      *  If there is nothing to repair it makes the repairman await on condition
      * @param repairman reference to a FREE worker looking for an item to repair
      */
-    public void assignItem(TaskRepair repairman) throws InterruptedException {
+    public void assignItem(TaskRepair repairman){
         myLock.lock();
         try {
             FixedItem tempItem = shelf.removeFirst();
@@ -94,7 +92,7 @@ public class ItemShelfMonitor {
                 System.out.println("Item successfully repaired, sending by worker " + Thread.currentThread().getName());
                 tempItem.repairman = null;
                 repairman.item = null;
-                Platform.runLater(new SendItemAnimation(control, timeMilis, tempItemGUI));
+                Platform.runLater(new SendItemAnimation(timeMilis, tempItemGUI));
             }
             else {
                 System.out.println("This item is not yet repaired, cannot send!");

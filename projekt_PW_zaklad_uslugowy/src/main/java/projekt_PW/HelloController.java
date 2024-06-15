@@ -22,7 +22,7 @@ public class HelloController {
 
     boolean isTheStoreRunning = false, isTheStoreClosed = false;
     public LinkedBlockingDeque<Circle> itemsOnShelf;
-    public LinkedBlockingDeque<Integer> availableRepairmen = new LinkedBlockingDeque<Integer>(3);
+    public LinkedBlockingDeque<Integer> availableRepairmen = new LinkedBlockingDeque<>(3);
 
     @FXML
     private HBox shelfGUI;
@@ -145,7 +145,7 @@ public class HelloController {
         }
 
         //creates the shelf
-        myShelf = new ItemShelfMonitor(maxItemCount, repairmenAmount, this);
+        myShelf = new ItemShelfMonitor(maxItemCount, this);
         itemsOnShelf = new LinkedBlockingDeque<>();
         shelfGUI.setSpacing(10);
 

@@ -1,7 +1,5 @@
 package projekt_PW;
 
-import javafx.concurrent.Task;
-
 public class FixedItem {
     String address;
     TaskRepair repairman;
