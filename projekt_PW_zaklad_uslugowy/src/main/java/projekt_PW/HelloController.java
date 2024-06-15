@@ -115,6 +115,7 @@ public class HelloController {
 
     public void initialize()
     {
+
         waitingItems = new SimpleIntegerProperty(0);
         waitingItemsCountGUI = new Label();
         waitingItemsCountGUI.textProperty().bind(Bindings.convert(waitingItems));
