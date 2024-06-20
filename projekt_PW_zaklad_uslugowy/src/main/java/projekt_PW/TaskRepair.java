@@ -33,8 +33,8 @@ public class TaskRepair extends Task<Void> {
         Platform.runLater(giveItemToRepairman);
         item.fixItem();
 
-        shelf.sendRepairedItem(this, 500);
-        TimeUnit.MILLISECONDS.sleep(500);
+        shelf.sendRepairedItem(this, control.getCFG().baseSendTime);
+        TimeUnit.MILLISECONDS.sleep(control.getCFG().baseSendTime);
         Runnable removeItemFromRepairman = () -> control.repairmenGUI[workerNo].getChildren().removeFirst();
         Platform.runLater(removeItemFromRepairman);
         control.availableRepairmen.add(workerNo);

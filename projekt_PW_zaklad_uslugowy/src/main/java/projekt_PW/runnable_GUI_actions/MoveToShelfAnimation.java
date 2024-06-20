@@ -17,14 +17,6 @@ public class MoveToShelfAnimation implements Runnable{
     public void run()
     {
         Circle itemGUI =(Circle) control.receptionistGUI.getChildren().removeFirst();
-//        double destX = control.getShelfGUI().getTranslateX();
-//        double destY = control.getShelfGUI().getTranslateY();
-//        TranslateTransition addItem = new TranslateTransition();
-//        addItem.setToX(destX);
-//        addItem.setToY(destY);
-//        addItem.setDuration(Duration.millis(1000));
-//        addItem.setNode(temp);
-//        addItem.play();
         control.getShelfGUI().getChildren().add(itemGUI);
         control.itemsOnShelf.add(itemGUI);
     }

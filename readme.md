@@ -1,7 +1,3 @@
-TODO:
-1) Refactor kodu
-2) Ogarnąć to, że UI jest nieestetyczne
-
 # Projekt z przedmiotu programowanie współbieżne
 
 Ma pokazać za pomocą graficznej aplikacji współbieżny przebieg procesów w zakładzie naprawczo-usługowym.

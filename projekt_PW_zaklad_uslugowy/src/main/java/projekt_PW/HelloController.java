@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 
+import java.io.IOException;
+import java.util.Properties;
 import java.util.concurrent.*;
 
 public class HelloController {
@@ -19,6 +21,11 @@ public class HelloController {
     PausableThreadPoolExecutor repairmen = new PausableThreadPoolExecutor(repairmenAmount, maxItemCount);
     private ItemShelfMonitor myShelf;
 
+    private CFG myCFG = new CFG();
+
+    public CFG getCFG() {
+        return myCFG;
+    }
 
     boolean isTheStoreRunning = false, isTheStoreClosed = false;
     public LinkedBlockingDeque<Circle> itemsOnShelf;
@@ -79,7 +86,7 @@ public class HelloController {
             return; // does nothing if there is NO shop currently running
         }
         waitingItems.set(waitingItems.get() + 1);
-        FixedItem temp = new FixedItem("No address (yet)");
+        FixedItem temp = new FixedItem("No address (yet)", myCFG);
         welcomeText.setText("You clicked to add a new item");
         receptionist.submit(new TaskAddOnShelf(myShelf, temp, this));
     }
@@ -113,8 +120,21 @@ public class HelloController {
         isTheStoreClosed = true;
     }
 
+    public void configParams()
+    {
+        Properties p = new Properties();
+        try {
+            p.load(getClass().getResourceAsStream("configParams.properties"));
+        } catch (IOException | NullPointerException e) {
+            System.out.println("-------------Properties file not found or not loadable, default values will be used");
+            return;
+        }
+        myCFG.readAnimationTimes(p);
+
+    }
     public void initialize()
     {
+        configParams();
 
         waitingItems = new SimpleIntegerProperty(0);
         waitingItemsCountGUI = new Label();

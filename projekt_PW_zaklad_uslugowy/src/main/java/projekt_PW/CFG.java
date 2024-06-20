@@ -1,37 +1,23 @@
 package projekt_PW;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
+
+import java.util.Properties;
 
 public class CFG {
-    private String filename;
-    private HashMap<String, Integer> params;
 
-    public HashMap<String, Integer> getParams() {
-        return (HashMap<String, Integer>) Collections.unmodifiableMap(params);
-    }
+    public int addToShelfTime = 250;
+    public int baseFixTime = 2000;
+    public int randomFixTime = 1000;
+    public int baseSendTime = 500;
 
-    private LinkedList<String> paramNames;
-    public CFG(String filename)
+    public void readAnimationTimes(Properties p)
     {
-        this.filename = filename;
-        params = new HashMap<>();
-        paramNames = new LinkedList<>();
-        paramNames.add("Pick from the waiting queue time");
-        paramNames.add("Give an address time");
-        paramNames.add("Move item to shelf animation time");
-        paramNames.add("Fix item minimal time");
-        paramNames.add("Fix item additional complications time");
-        paramNames.add("Send item animation time");
-        paramNames.add("Shelf max capacity");
+        System.out.println("-------Reading from properties file...");
 
-        System.out.println("What do you want to do?");
-        System.out.println("L - load existing parameters");
-        System.out.println("S - set parameters");
-
+        addToShelfTime = Integer.parseInt(p.getProperty("addToShelfTime", "250"));
+        baseFixTime = Integer.parseInt(p.getProperty("baseFixTime", "2000"));
+        randomFixTime = Integer.parseInt(p.getProperty("randomFixTime", "1000"));
+        baseSendTime = Integer.parseInt(p.getProperty("baseSendTime", "500"));
     }
-
-
 
 }
