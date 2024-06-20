@@ -32,12 +32,18 @@
       <StackPane fx:id="repairmanGUI1" layoutX="47.0" layoutY="38.0" prefHeight="96.0" prefWidth="139.0" />
       <StackPane fx:id="repairmanGUI3" layoutX="47.0" layoutY="312.0" prefHeight="96.0" prefWidth="139.0" />
       <StackPane fx:id="repairmanGUI2" layoutX="47.0" layoutY="174.0" prefHeight="96.0" prefWidth="139.0" />
-      <Text layoutX="655.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Waiting clients" wrappingWidth="107.0">
+      <Text layoutX="637.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Waiting clients" wrappingWidth="139.0">
          <font>
-            <Font size="16.0" />
+            <Font size="20.0" />
          </font>
       </Text>
-      <StackPane fx:id="waitingItemsContainterGUI" layoutX="642.0" layoutY="142.0" prefHeight="81.0" prefWidth="128.0" />
+      <StackPane fx:id="waitingItemsContainterGUI" layoutX="642.0" layoutY="101.0" prefHeight="81.0" prefWidth="128.0" />
+      <StackPane fx:id="itemsOnShelfCounterContainerGUI" layoutX="631.0" layoutY="292.0" prefHeight="122.0" prefWidth="150.0" />
+      <Text layoutX="644.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Items on shelf">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

@@ -16,12 +16,11 @@ import java.util.concurrent.*;
 
 public class HelloController {
     final int repairmenAmount = 3;
-    final int maxItemCount = 100;
     PausableThreadPoolExecutor receptionist = new PausableThreadPoolExecutor(1, 150);
-    PausableThreadPoolExecutor repairmen = new PausableThreadPoolExecutor(repairmenAmount, maxItemCount);
+    PausableThreadPoolExecutor repairmen = new PausableThreadPoolExecutor(repairmenAmount, 250);
     private ItemShelfMonitor myShelf;
 
-    private CFG myCFG = new CFG();
+    private final CFG myCFG = new CFG();
 
     public CFG getCFG() {
         return myCFG;
@@ -41,10 +40,6 @@ public class HelloController {
     @FXML
     private Label welcomeText;
 
-    public AnchorPane getShopPane() {
-        return shopPane;
-    }
-
     @FXML
     private AnchorPane shopPane;
 
@@ -58,8 +53,12 @@ public class HelloController {
     private StackPane repairmanGUI3;
     @FXML
     private StackPane waitingItemsContainterGUI;
+    @FXML
+    private StackPane itemsOnShelfCounterContainerGUI;
     private Label waitingItemsCountGUI;
+    private Label itemsOnShelfCountGUI;
     private SimpleIntegerProperty waitingItems;
+    private SimpleIntegerProperty shelfCount;
 
     StackPane[] repairmenGUI;
 
@@ -94,7 +93,8 @@ public class HelloController {
     {
         this.waitingItems.set(this.waitingItems.get() - 1);
     }
-
+    public void incShelfCount(){ this.shelfCount.set(this.shelfCount.get() + 1);}
+    public void decShelfCount(){ this.shelfCount.set(this.shelfCount.get() - 1);}
     @FXML
     protected void pauseTheStore()
     {
@@ -140,6 +140,12 @@ public class HelloController {
         waitingItemsCountGUI = new Label();
         waitingItemsCountGUI.textProperty().bind(Bindings.convert(waitingItems));
         waitingItemsCountGUI.setFont(new Font(20));
+
+        itemsOnShelfCountGUI = new Label();
+        shelfCount = new SimpleIntegerProperty(0);
+        itemsOnShelfCountGUI.textProperty().bind(Bindings.convert(shelfCount));
+        itemsOnShelfCountGUI.setFont(new Font(20));
+
         availableRepairmen.add(0);
         availableRepairmen.add(1);
         availableRepairmen.add(2);
@@ -166,7 +172,7 @@ public class HelloController {
         }
 
         //creates the shelf
-        myShelf = new ItemShelfMonitor(maxItemCount, this);
+        myShelf = new ItemShelfMonitor(myCFG.maxItemCount, this);
         itemsOnShelf = new LinkedBlockingDeque<>();
         shelfGUI.setSpacing(10);
 
@@ -176,6 +182,13 @@ public class HelloController {
         tempName.setStrokeWidth(5);
         waitingItemsContainterGUI.getChildren().add(tempName);
         waitingItemsContainterGUI.getChildren().add(waitingItemsCountGUI);
+
+        tempName = new Circle(50);
+        tempName.setFill(Color.TRANSPARENT);
+        tempName.setStroke(Color.BLACK);
+        tempName.setStrokeWidth(5);
+        itemsOnShelfCounterContainerGUI.getChildren().add(tempName);
+        itemsOnShelfCounterContainerGUI.getChildren().add(itemsOnShelfCountGUI);
     }
 
 }

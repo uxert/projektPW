@@ -26,6 +26,7 @@ public class TaskRepair extends Task<Void> {
         Runnable removeItemFromShelf = () -> {
             itemGUI = control.itemsOnShelf.removeFirst();
             control.getShelfGUI().getChildren().removeFirst();
+            control.decShelfCount();
         };
         Platform.runLater(removeItemFromShelf);
 
